@@ -1,0 +1,405 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | Exam</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/exam.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/exam.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/exam.png' %}">
+    <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/style-login.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400,700&display=swap">
+    <style media="screen">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: url("{% static 'images/back.jpg' %}") no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar a:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        .body-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .box {
+            width: 400px;
+            padding: 40px;
+            background: rgba(33, 33, 33, 0.95);
+            border-radius: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-heading {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            font-size: 32px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-label {
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            font-weight: 500;
+            width: 250px;
+            justify-content: flex-start;
+            padding-left: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-label:hover {
+            color: #4caf50;
+            transform: translateX(3px);
+        }
+
+        .material-symbols-outlined {
+            color: rgba(255, 255, 255, 0.8);
+            margin-right: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .box input[type="text"],
+        .box input[type="password"] {
+            border: 0;
+            background: rgba(255, 255, 255, 0.2);
+            display: block;
+            margin: 0;
+            text-align: center;
+            border: 2px solid transparent;
+            padding: 14px 16px;
+            width: 250px;
+            outline: none;
+            color: #ffffff;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            ::placeholder {
+                color: rgba(255, 255, 255, 0.9);
+                opacity: 1;
+                font-size: 15px;
+            }
+            :focus::placeholder {
+                opacity: 0;
+            }
+        }
+
+        .box input[type="text"]:focus,
+        .box input[type="password"]:focus {
+            border-color: #4caf50;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
+        }
+
+        .password-container {
+            position: relative;
+            width: 250px;
+            margin: 0;
+        }
+        .password-container input {
+            width: 100%;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        .toggle-password:hover {
+            color: #4caf50;
+        }
+
+        .box input[type="submit"] {
+            border: 0;
+            background: linear-gradient(to right, #4caf50, #347736);
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+            padding: 14px 40px;
+            outline: none;
+            color: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .box input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            background: linear-gradient(to right, #347736, #4caf50);
+        }
+
+        .box input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .box:before {
+            content: "";
+            background: url("{% static 'images/back.jpg' %}") no-repeat center center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            border-radius: 12px;
+            filter: blur(10px);
+        }
+
+        .guest-login-section {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        .guest-login-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .guest-login-section a:hover {
+            color: #4caf50;
+        }
+
+        .dropdown-toggle {
+            color: rgba(255, 255, 255, 0.8) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 6px 12px !important;
+            border-radius: 6px !important;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-toggle:hover {
+            color: #4caf50 !important;
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        .dropdown-item {
+            color: rgba(255, 255, 255, 0.9) !important;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(76, 175, 80, 0.1) !important;
+            color: #4caf50 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+
+    <div class="box">
+        <h1 class="login-heading">LOGIN</h1>
+        <form method="POST" action="{% url 'std_login' %}" class="register-form" id="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.id.id_for_label }}" class="form-label">
+                    <span class="material-symbols-outlined">person</span>
+                    User ID
+                </label>
+                {{ form.id }}
+                <small class="text-danger" id="id-error"></small>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}" class="form-label">
+                    <span class="material-symbols-outlined">lock</span>
+                    Password
+                </label>
+                <div class="password-container">
+                    {{ form.password }}
+                    <span class="toggle-password material-symbols-outlined">visibility_off</span>
+                </div>
+                <small class="text-danger" id="password-error"></small>
+            </div>
+            
+            <style>
+                .password-container {
+                    position: relative;
+                    width: 250px;
+                    margin: 0;
+                }
+                .password-container input {
+                    width: 100%;
+                }
+                .toggle-password {
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    color: #e0e0e0;
+                }
+                .toggle-password:hover {
+                    color: #4caf50;
+                }
+            </style>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const passwordInput = document.querySelector('.password-container input[type="password"]');
+                    const toggleButton = document.querySelector('.toggle-password');
+                    
+                    toggleButton.addEventListener('click', function() {
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                        this.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+                    });
+                });
+            </script>
+            <div class="d-grid">
+                <button class="btn btn-lg btn-login text-uppercase fw-bold mb-2" type="submit" style="background: #4caf50; color: #ffffff; border: none; border-radius: 10px; padding: 12px 20px; font-size: 18px; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);">
+                    Login
+                </button>
+            </div>
+        </form>
+        <div class="d-flex justify-content-around flex-wrap">
+            <div class="">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                        role="button">
+                        Login as
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/student">Student</a></li>
+                        <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if error_messages %}
+        <!-- Error Alert -->
+        <div class="alert alert-danger alert-dismissible fade show my-2">
+            {% for message in error_messages %}
+            {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endif %}
+
+        {% if debug_messages %}
+        <!-- Debug Messages -->
+        <div class="alert alert-info alert-dismissible fade show my-2">
+            <h5>Debug Messages:</h5>
+            <ul>
+                {% for message in debug_messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endif %}
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</body>
+
+</html>

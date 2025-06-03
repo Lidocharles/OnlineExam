@@ -1,0 +1,141 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}{{ quiz.title }} | {{ course.name }} {% endblock title %}
+{% block profile %}{% url 'profile' student.student_id %}{% endblock %}
+{% block user %}{{ student.name }}{% endblock %}
+{% block courses %}{% url 'myCourses' %}{% endblock %}
+{% block allCourses %}{% url 'courses' %}{% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main content area -->
+    <div class="col-md-8 offset-md-3">
+      <!-- navigation links -->
+      <div class="shadow-sm mb-4">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+          <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myCourses' %}">My Courses</a></li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myQuizzes' course.code %}">Exams</a></li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">{{ quiz.title }}</li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Quiz Timer and Instructions -->
+      <div class="shadow-sm px-3 pt-3 rounded border text-light mb-4" style="background: linear-gradient(270deg, #00d2ff 0%, #3a47d5 100%);">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fw-bold fs-5">{{ quiz.title }}</p>
+            <p class="text-light">{{ quiz.description }}</p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              format_list_numbered
+              </span>Total Questions : <span class="fw-bold">{{ quiz.total_questions }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              military_tech
+              </span>Total Marks : <span class="fw-bold">{{ quiz.total_marks }}</span>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              history
+              </span>Started : <span class="fw-bold">{{ quiz.starts }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              timer_off
+              </span>Ends : <span class="fw-bold">{{ quiz.ends }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              timelapse
+              </span>Duration : <span class="fw-bold">{{ quiz.duration }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Questions Form -->
+      <form action="{% url 'studentAnswer' course.code quiz.id %}" method="POST" id="quizForm">
+        {% csrf_token %}
+        <!-- Questions -->
+        <div class="shadow-sm p-4 mb-4">
+          {% for question in questions %}
+            <div class="questionInd mb-3 shadow-sm p-3 border border-2 rounded border-opacity-75">
+              <div class="fw-bold mb-2">
+                <span class="fw-bold fs-5">{{ forloop.counter }}.</span> <span class="me-3">{{ question.question }}</span>
+                <span class="text-muted">{{ question.marks }} marks</span>
+              </div>
+              
+              {% if question.format == 'TF' %}
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="answer_{{ question.id }}" id="true_{{ question.id }}" value="True">
+                  <label class="form-check-label" for="true_{{ question.id }}">True</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="answer_{{ question.id }}" id="false_{{ question.id }}" value="False">
+                  <label class="form-check-label" for="false_{{ question.id }}">False</label>
+                </div>
+              {% elif question.format == 'MCQ' %}
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="answer_{{ question.id }}" id="option1_{{ question.id }}" value="A">
+                  <label class="form-check-label" for="option1_{{ question.id }}">{{ question.option1 }}</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="answer_{{ question.id }}" id="option2_{{ question.id }}" value="B">
+                  <label class="form-check-label" for="option2_{{ question.id }}">{{ question.option2 }}</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="answer_{{ question.id }}" id="option3_{{ question.id }}" value="C">
+                  <label class="form-check-label" for="option3_{{ question.id }}">{{ question.option3 }}</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="answer_{{ question.id }}" id="option4_{{ question.id }}" value="D">
+                  <label class="form-check-label" for="option4_{{ question.id }}">{{ question.option4 }}</label>
+                </div>
+              {% elif question.format == 'FIB' %}
+                <div class="mb-3">
+                  <input type="text" class="form-control" name="answer_{{ question.id }}" placeholder="Enter your answer">
+                </div>
+              {% endif %}
+              <input type="hidden" name="question" value="{{ question.id }}">
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary px-2 me-1">Submit</button>
+          <a href="{% url 'myQuizzes' course.code %}" class="btn btn-danger px-2">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Timer functionality
+const quizEnd = new Date('{{ quiz.end }}');
+const timerDisplay = document.getElementById('timer');
+
+function updateTimer() {
+    const now = new Date();
+    const timeLeft = quizEnd - now;
+    
+    if (timeLeft <= 0) {
+        timerDisplay.textContent = 'Time is up!';
+        document.getElementById('quizForm').submit();
+    } else {
+        const minutes = Math.floor(timeLeft / 60000);
+        const seconds = ((timeLeft % 60000) / 1000).toFixed(0);
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+}
+
+setInterval(updateTimer, 1000);
+</script>
+{% endblock %}

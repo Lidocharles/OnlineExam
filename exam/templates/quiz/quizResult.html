@@ -1,0 +1,174 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}{{ quiz.title }} | {{ course.name }} {% endblock title %}
+{% block profile %}{% url 'profile' student.student_id %}{% endblock %}
+{% block user %}{{ student.name }}{% endblock %}
+{% block courses %}{% url 'myCourses' %}{% endblock %}
+{% block allCourses %}{% url 'courses' %}{% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main content area -->
+    <div class="col-md-8 offset-md-3">
+      <!-- navigation links -->
+      <div class="shadow-sm mb-4">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+          <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myCourses' %}">My Courses</a></li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myQuizzes' course.code %}">Exams</a></li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">{{ quiz.title }}</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- Quiz Summary -->
+      <div class="shadow-sm px-3 pt-3 rounded border text-light mb-4" style="background: linear-gradient(270deg, #00d2ff 0%, #3a47d5 100%);">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fw-bold fs-5"> {{ quiz.title }} Summary</p>
+            <p class="text-light">
+              {{ quiz.description }}
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              format_list_numbered
+              </span>Total Questions : <span class="fw-bold">{{ quiz.total_questions }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              military_tech
+              </span> Marks : <span class="fw-bold">{{ quiz.total_marks_obtained }} / {{ quiz.total_marks }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              timer
+              </span> Time taken : <span id="timetaken" class="fw-bold"></span>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              history
+              </span>Started : <span class="fw-bold">{{ quiz.starts }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              timer_off
+              </span>Ended : <span class="fw-bold">{{ quiz.ends }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              timelapse
+              </span>Duration : <span class="fw-bold">{{ quiz.duration }}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+              alarm_on
+              </span>Submitted on : {{ quiz.submission_time }}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Questions -->
+      <div class="shadow-sm p-4 mb-4">
+        {% for question in questions %}
+          <div class="questionInd mb-3 shadow-sm p-3 border border-2 rounded border-opacity-75 {% if question.student_answer == question.correct_answer %} border-success {% else %} border-danger {% endif %} ">
+            <div class="d-flex justify-content-between mb-3">
+              <div class="fw-bold">
+                <span class="fw-bold fs-5">{{ forloop.counter }}.</span> <span class="me-3">{{ question.question }}</span>
+                <span class="text-muted">{{ question.marks }} marks</span>
+              </div>
+              {% if question.is_correct %}
+                <span class="text-success fw-bold"> <img class="mb-1" height="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span>
+              {% else %}
+                <span class="text-danger fw-bold"> <img height="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>
+              {% endif %}
+            </div>
+            <div>
+              {% if question.format == 'TF' %}
+                <p class="alert alert-light border" style="padding: 0.60rem !important">
+                  Your Answer: {{ question.student_answer }}
+                  <span class="ms-2 {% if question.is_correct %}text-success{% else %}text-danger{% endif %}">
+                    {% if question.is_correct %}✓{% else %}✗{% endif %}
+                  </span>
+                </p>
+                <p class="alert alert-light border" style="padding: 0.60rem !important">
+                  Correct Answer: {{ question.correct_answer }}
+                </p>
+              {% elif question.format == 'MCQ' %}
+                <p class="alert alert-light border" style="padding: 0.60rem !important">
+                  Your Answer: {{ question.student_answer }}
+                  <span class="ms-2 {% if question.is_correct %}text-success{% else %}text-danger{% endif %}">
+                    {% if question.is_correct %}✓{% else %}✗{% endif %}
+                  </span>
+                </p>
+                <p class="alert alert-light border" style="padding: 0.60rem !important">
+                  Correct Answer: {{ question.correct_answer }}
+                </p>
+              {% elif question.format == 'FIB' %}
+                <p class="alert alert-light border" style="padding: 0.60rem !important">
+                  Your Answer: {{ question.student_answer }}
+                  <span class="ms-2 {% if question.is_correct %}text-success{% else %}text-danger{% endif %}">
+                    {% if question.is_correct %}✓{% else %}✗{% endif %}
+                  </span>
+                </p>
+                <p class="alert alert-light border" style="padding: 0.60rem !important">
+                  Correct Answer: {{ question.correct_answer }}
+                </p>
+              {% endif %}
+            </div>
+            <div class="mt-2">
+              <p class="fw-bold">Marks: {{ question.student_marks }} / {{ question.marks }}</p>
+              {% if question.explanation %}
+                <p class="text-muted">Explanation: {{ question.explanation }}</p>
+              {% endif %}
+            </div>
+            <div>
+              {% if not question.student_answer %}
+                <span class="fw-bold text-muted" style="font-size:15px"> You did not answer!</span>
+              {% endif %}
+            </div>
+            <div class="mt-2">
+              <span class="fw-bold">Correct answer is </span>
+              <span class="fw-bold text-success">{{ question.correct_answer|lower }}</span>
+            </div>
+            {% if question.explanation %}
+              <div class="mt-2 bg-warning bg-opacity-10 p-2 border-start border-2 border-warning" style="font-size:smaller">
+                <span class="fw-bold">Explanation : </span>{{ question.explanation }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    // Animation for questions
+    const questionInd = document.querySelectorAll('.questionInd');
+    anime({
+        targets: questionInd,
+        opacity: [0, 1],
+        easing: 'easeInOutQuad',
+        duration: 1500,
+        delay: (el, i) => i * 250
+    });
+
+    // Time conversion function
+    function convertTime(timetaken) {
+        const hours = Math.floor(timetaken / 3600);
+        const minutes = Math.floor((timetaken - (hours * 3600)) / 60);
+        const seconds = Math.floor(timetaken - (hours * 3600) - (minutes * 60));
+        
+        const formatNumber = (num) => num < 10 ? `0${num}` : num;
+        
+        if (hours === 0 && minutes === 0) {
+            return `${seconds} seconds`;
+        } else if (hours === 0) {
+            return `${formatNumber(minutes)}:${formatNumber(seconds)} minutes`;
+        } else {
+            return `${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)} hours`;
+        }
+    }
+
+    // Set time taken
+    document.getElementById('timetaken').innerHTML = convertTime(parseInt('{{ quiz.time_taken }}'));
+</script>
+{% endblock %}
