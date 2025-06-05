@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--twk+9k@(25&zebam4ekwv-e4ag6$t#*2@r+f+_2vtiwv%ufo^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['onlineexam-wuc6.onrender.com']
+ALLOWED_HOSTS = ['']
 
 # Login settings
 LOGIN_URL = '/login/'
@@ -58,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
 ]
 
 ROOT_URLCONF = 'Onlinexam.urls'
@@ -144,5 +143,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
 
