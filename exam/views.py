@@ -462,8 +462,12 @@ def studentAnswer(request, code, quiz_id):
 
 def quizResult(request, code, quiz_id):
     if is_student_authorised(request, code):
-        course = Course.objects.get(code=code)
-        quiz = Quiz.objects.get(id=quiz_id)
+        try:
+            course = Course.objects.get(code=code)
+            quiz = Quiz.objects.get(id=quiz_id)
+        except Quiz.DoesNotExist:
+            messages.error(request, 'This quiz has been deleted by the faculty.')
+            return redirect('myQuizzes', code=code)
         questions = Question.objects.filter(quiz=quiz)
 
         try:
