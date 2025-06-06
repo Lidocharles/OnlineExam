@@ -46,6 +46,8 @@ def is_faculty_authorised(request, code):
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password, make_password
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
 
 def std_login(request):
     error_messages = []
@@ -664,3 +666,18 @@ def guestFaculty(request):
         return redirect('facultyCourses')
     except:
         return redirect('std_login')
+
+@require_http_methods(["GET", "POST"])
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        message = request.POST.get('message', '')
+        
+        # Here you would typically save the contact message to the database
+        # or send an email notification
+        
+        messages.success(request, 'Thank you for your message. We will get back to you soon.')
+        return redirect('contact')
+    
+    return render(request, 'main/contact.html')

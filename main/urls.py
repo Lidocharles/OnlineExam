@@ -40,4 +40,5 @@ urlpatterns = [
          name='changePhotoFaculty'),
     path('search/', views.search, name='search'),
     path('error/', views.error, name='error'),
+    path('contact/', views.contact, name='contact'),
 ]
