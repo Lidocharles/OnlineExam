@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'main',
     'exam',
     'discussion',
-    'froala_editor',
 
 ]
 

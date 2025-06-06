@@ -1,5 +1,4 @@
 from django import forms
-from froala_editor.widgets import FroalaEditor
 from .models import Announcement, Material
 
 
@@ -13,9 +12,8 @@ class AnnouncementForm(forms.ModelForm):
         model = Announcement
         fields = ['description']
         widgets = {
-            'description': FroalaEditor(),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
-
 
 
 class MaterialForm(forms.ModelForm):
@@ -30,6 +28,6 @@ class MaterialForm(forms.ModelForm):
         model = Material
         fields = ('description', 'file')
         widgets = {
-            'description': FroalaEditor(),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'file': forms.FileInput(attrs={'class': 'form-control', 'id': 'file', 'name': 'file', 'aria-describedby': 'file', 'aria-label': 'Upload'}),
         }

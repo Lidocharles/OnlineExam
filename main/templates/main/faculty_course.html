@@ -50,60 +50,58 @@
    <div class="rounded p-3 m-3 shadow d-flex justify-content-between align-items-center">
       <span></span>
       <h5 id="courseTitle" class="mt-2 fw-bold">{{course.department}}-{{course.code}} : {{course.name}}</h5>
-      <div class="dropdown">
-         <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
-            alt="Options" height="32">
-         <ul class="dropdown-menu">
-            <li class="border-bottom">
-               <a class="dropdown-item" href="{% url 'discussion' course.code %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots mx-2" viewBox="0 0 16 16">
-                     <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
-                     <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                  </svg>
-                  Discussion
-               </a>
-            </li>
-            <li class="border-bottom">
-               <a class="dropdown-item" href="{% url 'addAnnouncement' course.code %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-megaphone mx-2" viewBox="0 0 16 16">
-                     <path d="M13 14c1.105 0 2-.895 2-2V5c0-1.105-.895-2-2-2H7c-.37 0-.706.08-1.003.224l-2.848 2.848a1 1 0 0 0 0 1.414l2.848 2.848C6.294 9.92 6.73 10 7 10h6c.37 0 .706-.08 1.003-.224l2.848-2.848a1 1 0 0 0 0-1.414l-2.848-2.848C14.294 3.08 13.73 3 13 3H7c-.37 0-.706.08-1.003.224l-2.848 2.848a1 1 0 0 0 0 1.414l2.848 2.848C6.294 8.92 6.73 9 7 9h5.993a2 2 0 0 1 1.994 1.586l-.489 2.49A2 2 0 0 1 13 14z"/>
-                  </svg>
-                  Announcements
-               </a>
-            </li>
-            <li class="border-bottom">
-               <a class="dropdown-item" href="{% url 'addCourseMaterial' course.code %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text mx-2" viewBox="0 0 16 16">
-                     <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
-                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2A1.5 1.5 0 0 0 14 3v1h-1V3a1 1 0 0 1 1-1h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V3z"/>
-                  </svg>
-                  Course Material
-               </a>
-            </li>
-            <li>
-               <a class="dropdown-item" href="{% url 'allQuizzes' course.code %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle mx-2" viewBox="0 0 16 16">
-                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3H4.5a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                  Add Exam
-               </a>
-            </li>
-         </ul>
+      <div class="d-flex align-items-center">
+         <a href="{% url 'allQuizzes' course.code %}" class="btn btn-primary me-2">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3H4.5a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+             </svg>
+             Add Exam
+         </a>
+         <div class="dropdown">
+            <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
+               alt="Options" height="32">
+            <ul class="dropdown-menu">
+               <li class="border-bottom">
+                  <a class="dropdown-item" href="{% url 'discussion' course.code %}">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots mx-2" viewBox="0 0 16 16">
+                        <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                     </svg>
+                     Discussion
+                  </a>
+               </li>
+               <li class="border-bottom">
+                  <a class="dropdown-item" href="{% url 'addAnnouncement' course.code %}">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-megaphone mx-2" viewBox="0 0 16 16">
+                        <path d="M13 14c1.105 0 2-.895 2-2V5c0-1.105-.895-2-2-2H7c-.37 0-.706.08-1.003.224l-2.848 2.848a1 1 0 0 0 0 1.414l2.848 2.848C6.294 9.92 6.73 10 7 10h6c.37 0 .706-.08 1.003-.224l2.848-2.848a1 1 0 0 0 0-1.414l-2.848-2.848C14.294 3.08 13.73 3 13 3H7c-.37 0-.706.08-1.003.224l-2.848 2.848a1 1 0 0 0 0 1.414l2.848 2.848C6.294 8.92 6.73 9 7 9h5.993a2 2 0 0 1 1.994 1.586l-.489 2.49A2 2 0 0 1 13 14z"/>
+                     </svg>
+                     Announcements
+                  </a>
+               </li>
+               <li class="border-bottom">
+                  <a class="dropdown-item" href="{% url 'addCourseMaterial' course.code %}">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text mx-2" viewBox="0 0 16 16">
+                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2A1.5 1.5 0 0 0 14 3v1h-1V3a1 1 0 0 1 1-1h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V3z"/>
+                     </svg>
+                     Course Material
+                  </a>
+               </li>
+               <li>
+                  <a class="dropdown-item" href="{% url 'allQuizzes' course.code %}">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle mx-2" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3H4.5a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                     </svg>
+                     Add Exam
+                  </a>
+               </li>
+            </ul>
+         </div>
       </div>
    </div>
    <!-- course name ends -->
-
-   <!-- Add Exam button -->
-   <div class="d-flex justify-content-end mb-3">
-       <a href="{% url 'allQuizzes' course.code %}" class="btn btn-primary">
-           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3H4.5a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-           </svg>
-           Add Exam
-       </a>
-   </div>
 
    <!-- announcement section starts -->
    <div class="container" style="max-width: 30cm;">
@@ -177,68 +175,59 @@
    </div>
 </div>
    <!-- announcement section ends -->
-   <!-- course material section starts -->
-   <div class="container" style="max-width: 30cm;">
-   <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
-      <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2 animate__animated animate__zoomInUp">
-         <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
-            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
-         <a
-            href="{% url 'addCourseMaterial' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
-            alt="" height="32"></a>
-      </div>
-      <div>
-      </div>
-   </div>
-         {% for material in materials  %}
-         <!-- individual material starts -->
-         <div class="fs-6 text-break mb-2">{% autoescape off %}{{material.description}}{% endautoescape %}</div>
-         {% if  material.file %}
-         <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">File : {{material.file.name}}</span></a><br>
-         {% endif %}
-         <!-- Popup -->
-         <div class="modal fade" id="materialDel{{material.id}}" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="materialBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-               <div class="modal-content">
-                  <div class="modal-header" style="border:none">
-                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body fs-6">
-                     Are you sure you want to remove this item?
-                  </div>
-                  <div class="modal-footer" style="border:none">
-                     <button type="button" class="btn btn-sm "
-                        data-bs-dismiss="modal">Cancel</button>
-                     <a class="btn btn-sm btn-primary"
-                        href="{% url 'deleteCourseMaterial' course.code material.id %}">Confirm</a>
-                  </div>
-               </div>
+    <!-- course material section starts -->
+    <div class="container" style="max-width: 30cm;">
+        <div class="rounded p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
+            <div class="animate__animated animate__zoomInDown d-flex justify-content-between border-bottom border-1 mb-2">
+                <h5 class="fw-bold" style="color: rgb(10, 10, 48);">
+                    <img src="{% static 'images/icon/folder.png' %}" alt="" style="height:1.5rem; vertical-align: text-bottom;">
+                    <span style="margin-right: 0.6rem;"></span>
+                    Course Material
+                </h5>
+                <a href="{% url 'addCourseMaterial' course.code %}"><img src="{% static 'images/icon/iconBlack.png' %}" alt="" height="32"></a>
             </div>
-         </div>
-         <div class="d-flex flex-row justify-content-between">
-            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-               data-bs-target="#materialDel{{material.id}}" style="border:none">
-               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-               </svg>
-               Remove
-            </button>
-            <div style="color:grey;">
-               {{material.post_date}}
+
+            <!-- Material list -->
+            <div class="material-list">
+                {% for material in materials %}
+                <div class="material-item mb-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="material-info">
+                            <h6 class="mb-1">{{ material.description }}</h6>
+                            <small class="text-muted">{{ material.post_date }}</small>
+                        </div>
+                        <div class="material-actions">
+                            <a href="{{ material.file.url }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                </svg>
+                                Download
+                            </a>
+                            <a href="{% url 'editMaterial' course.code material.id %}" class="btn btn-sm btn-outline-primary me-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a1 1 0 0 1-1.166-1.165l2-5a1 1 0 0 1 1.166-1.165l10 10zm-11.5 11.5h3v3h1v-3h3v-1h-3v-3h-1v3h-3v1z"/>
+                                </svg>
+                                Edit
+                            </a>
+                            <a href="{% url 'deleteCourseMaterial' course.code material.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this material?')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center text-muted">No course materials have been uploaded</p>
+                {% endfor %}
             </div>
-         </div>
-         <hr>
-         {% empty %}
-         <p class="text-center text-muted fs-6">Course materials not available</p>
-         {% endfor %}
-         <!-- individual material ends -->
-      </div>
-   </div>
-   <!-- course material section ends-->
-   </div>
+        </div>
+    </div>
+    <!-- course material section ends -->
+    </div>
 </div>
 <script>
    $(document).ready(function(){

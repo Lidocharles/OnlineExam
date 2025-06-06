@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, EmailValidator
-from froala_editor.fields import FroalaField
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -192,7 +191,7 @@ class Announcement(models.Model):
     course_code = models.ForeignKey(
         Course, on_delete=models.CASCADE, null=False)
     datetime = models.DateTimeField(auto_now_add=True, null=False)
-    description = FroalaField()
+    description = models.TextField()
 
     class Meta:
         verbose_name_plural = "Announcements"

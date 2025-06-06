@@ -360,6 +360,35 @@ def updateAnnouncement(request, code, id):
         return redirect('std_login')
 
 
+def editMaterial(request, code, id):
+    if is_faculty_authorised(request, code):
+        material = Material.objects.get(course_code_id=code, id=id)
+        context = {
+            'material': material,
+            'course': Course.objects.get(code=code),
+            'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])
+        }
+        return render(request, 'main/update-material.html', context)
+    else:
+        return redirect('std_login')
+
+
+def updateMaterial(request, code, id):
+    if is_faculty_authorised(request, code):
+        try:
+            material = Material.objects.get(course_code_id=code, id=id)
+            form = MaterialForm(request.POST, request.FILES, instance=material)
+            if form.is_valid():
+                form.save()
+                messages.info(request, 'Material updated successfully.')
+                return redirect('/faculty/' + str(code))
+        except:
+            return redirect('/faculty/' + str(code))
+
+    else:
+        return redirect('std_login')
+
+
 def addCourseMaterial(request, code):
     if is_faculty_authorised(request, code):
         if request.method == 'POST':

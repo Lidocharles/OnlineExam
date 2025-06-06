@@ -41,7 +41,10 @@
             <div class="from-group">
                <form method="post" enctype="multipart/form-data">
                   {% csrf_token %}
-                  {{ form.as_p }}
+                  <div class="mb-3">
+                      <label for="description" class="form-label">Description</label>
+                      <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                  </div>
                   <!-- submit button -->
                   <div class="d-flex justify-content-end bg-light border p-2 rounded">
                      <a class="btn btn-sm btn-outline-danger mx-2" href="{% url 'faculty' course.code %}">Cancel</a>

@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="static/assets/css/templatemo-edu-meeting.css">
     <link rel="stylesheet" href="static/assets/css/owl.css">
     <link rel="stylesheet" href="static/assets/css/lightbox.css">
+    <!-- Quill.js CSS -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <!--
 
 TemplateMo 569 Edu Meeting
@@ -740,6 +742,44 @@ https://templatemo.com/tm-569-edu-meeting
     <script src="static/assets/js/video.js"></script>
     <script src="static/assets/js/slick-slider.js"></script>
     <script src="static/assets/js/custom.js"></script>
+    <!-- Quill.js JS -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+    <script>
+        // Initialize Quill editor
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                    ['blockquote', 'code-block'],
+
+                    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                    [{ 'direction': 'rtl' }],                         // text direction
+
+                    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+                    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                    [{ 'font': [] }],
+                    [{ 'align': [] }],
+
+                    ['clean'],                                         // remove formatting button
+                    ['link', 'image']                                  // link and image
+                ]
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('editorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var content = quill.root.innerHTML;
+            // Here you would typically send the content to your backend
+            console.log('Editor content:', content);
+        });
+    </script>
     <script>
         //according to loftblog tut
         $('.nav li:first').addClass('active');
