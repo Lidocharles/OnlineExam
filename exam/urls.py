@@ -14,4 +14,5 @@ urlpatterns = [
     path('editQuiz/<int:code>/<int:quiz_id>', views.editQuiz, name='editQuiz'),
     path('deleteQuiz/<int:code>/<int:quiz_id>', views.deleteQuiz, name='deleteQuiz'),
     path('editQuestion/<int:code>/<int:quiz_id>/<int:question_id>', views.editQuestion, name='editQuestion'),
+    path('downloadResults/<int:code>/<int:quiz_id>', views.download_exam_results, name='downloadResults'),
 ]

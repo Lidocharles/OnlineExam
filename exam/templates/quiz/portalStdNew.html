@@ -20,6 +20,44 @@
 <br>
 <br>
 <div class="container-fluid">
+    <!-- Add security script -->
+    <script>
+        // Prevent right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Prevent keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 'c' || e.key === 'C' || 
+                    e.key === 'v' || e.key === 'V' ||
+                    e.key === 'x' || e.key === 'X' ||
+                    e.key === 'a' || e.key === 'A') {
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // Prevent text selection
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+
+        // Prevent drag and drop
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+
+        // Prevent copy on double click
+        document.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+        });
+
+        // Prevent highlighting
+        document.body.onselectstart = function() { return false; }
+        document.body.oncontextmenu = function() { return false; }
+    </script>
   <div class="row">
     <!-- Main content area -->
     <div class="col-md-8 offset-md-3">

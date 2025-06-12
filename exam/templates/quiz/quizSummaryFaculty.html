@@ -92,6 +92,11 @@
                 <p class="text-success fw-bold d-flex justify-content-center my-3">
                     Marks Published!
                 </p>
+                <div class="d-flex justify-content-center my-3">
+                    <a href="{% url 'downloadResults' course.code quiz.id %}" class="btn btn-sm btn-success mb-1 px-3">
+                        Download Results
+                    </a>
+                </div>
             {% else %}
                 <div class="d-flex justify-content-center my-3">
                     <form method="post" action=" {% url 'quizSummary' course.code quiz.id %}">{% csrf_token %}

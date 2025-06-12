@@ -1,4 +1,3 @@
-import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -11,6 +10,9 @@ from django.db.models import Count, Sum, F, FloatField, Q, Prefetch
 from django.db.models.functions import Cast
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
+import csv
+import datetime
 
 def quiz(request, code):
     if not request.user.is_authenticated:
@@ -459,6 +461,68 @@ def studentAnswer(request, code, quiz_id):
             return redirect('myQuizzes', code=code)
     else:
         return redirect('std_login')
+
+def download_exam_results(request, code, quiz_id):
+    if is_faculty_authorised(request, code):
+        try:
+            course = Course.objects.get(code=code)
+            quiz = Quiz.objects.get(id=quiz_id)
+            
+            # Get all students in the course
+            all_students = Student.objects.filter(course=course)
+            
+            # Create CSV response
+            response = HttpResponse(content_type='text/csv')
+            filename = f"{quiz.title.replace(' ', '_')}_results_{timezone.now().strftime('%Y%m%d')}.csv"
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            
+            writer = csv.writer(response)
+            
+            # Write header row
+            writer.writerow([
+                'Exam Name', 'Exam Date', 'Subject',
+                'Student Name', 'Student ID', 'Department', 'Email',
+                'Status', 'Marks Obtained', 'Total Marks'
+            ])
+            
+            # Calculate total marks for the quiz
+            total_marks = sum(question.marks for question in quiz.question_set.all())
+            
+            # Write data rows for all students
+            for student in all_students:
+                student_answers = StudentAnswer.objects.filter(student=student, quiz=quiz)
+                
+                if student_answers.exists():
+                    total_marks_obtained = sum(student_answer.marks for student_answer in student_answers)
+                    status = "Attempted"
+                else:
+                    total_marks_obtained = 0
+                    status = "Did not attempt"
+                
+                writer.writerow([
+                    quiz.title,
+                    quiz.end.strftime('%Y-%m-%d'),
+                    course.name,
+                    student.name,
+                    student.student_id,
+                    student.department,
+                    student.email,
+                    status,
+                    total_marks_obtained,
+                    total_marks
+                ])
+            
+            return response
+            
+        except Quiz.DoesNotExist:
+            messages.error(request, 'Quiz not found.')
+            return redirect('myQuizzes', code=code)
+        except Exception as e:
+            messages.error(request, f'Error downloading results: {str(e)}')
+            return redirect('myQuizzes', code=code)
+
+    messages.error(request, 'You are not authorized to access this course.')
+    return redirect('std_login')
 
 def quizResult(request, code, quiz_id):
     if is_student_authorised(request, code):
